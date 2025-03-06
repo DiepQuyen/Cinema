@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::div})}">
+<body>
+<div>
+    <h2 class="text-center mb-4">Thêm Rạp Chiếu Mới</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <!-- admin/rap-chieu/them.html -->
+            <form th:action="@{/admin/rap-chieu/them}" method="post" th:object="${rapChieu}">
+                <div class="mb-3">
+                    <label for="tenRap" class="form-label">Tên Rạp</label>
+                    <input type="text" class="form-control" id="tenRap" th:field="*{tenRap}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="diaChi" class="form-label">Địa Chỉ</label>
+                    <textarea class="form-control" id="diaChi" th:field="*{diaChi}" rows="3" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="soGhe" class="form-label">Số Ghế</label>
+                    <input type="number" class="form-control" id="soGhe" th:field="*{soGhe}" min="1" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="loaiRap" class="form-label">Loại Rạp</label>
+                    <select class="form-control" id="loaiRap" th:field="*{loaiRap}" required>
+                        <option value="">Chọn loại rạp</option>
+                        <option value="2D">2D</option>
+                        <option value="3D">3D</option>
+                        <option value="IMAX">IMAX</option>
+                    </select>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Thêm Rạp Chiếu</button>
+                    <a th:href="@{/admin/rap-chieu}" class="btn btn-secondary">Hủy</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

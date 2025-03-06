@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::div})}">
+<body>
+<div>
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <h2>Đã xảy ra lỗi</h2>
+            <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+            <a href="/" class="btn btn-primary mt-3">Về Trang Chủ</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::div})}">
+<body>
+<div>
+    <div class="row">
+        <div class="col-md-4">
+            <img th:src="${phim.anhBia}" class="img-fluid rounded" alt="Movie Poster">
+        </div>
+        <div class="col-md-8">
+            <h2 th:text="${phim.tenPhim}"></h2>
+            <p class="text-muted">
+                <span th:text="${phim.theLoai}"></span> |
+                <span th:text="${phim.thoiLuong + ' phút'}"></span>
+            </p>
+            <p th:text="${phim.moTa}"></p>
+
+            <h4 class="mt-4">Lịch Chiếu</h4>
+            <div class="list-group">
+                <div th:each="lichChieu : ${phim.lichChieus}"
+                     class="list-group-item"
+                     style="background-color: #FFF0F5;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong th:text="${#temporals.format(lichChieu.thoiGianChieu, 'HH:mm')}"></strong>
+                            <span th:text="${#temporals.format(lichChieu.thoiGianChieu, 'dd/MM/yyyy')}"></span>
+                        </div>
+                        <div>
+                            <span th:text="${#numbers.formatDecimal(lichChieu.giaVe, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></span>
+                            <a th:href="@{/dat-ve/{id}(id=${lichChieu.id})}"
+                               class="btn btn-sm btn-primary ms-2"
+                               th:classappend="${lichChieu.soChoNgoi == lichChieu.soChoDaDat} ? 'disabled'">
+                                Đặt vé
+                            </a>
+                        </div>
+                    </div>
+                    <small class="text-muted"
+                           th:text="'Số ghế trống: ' + (${lichChieu.soChoNgoi - lichChieu.soChoDaDat}) + '/' + ${lichChieu.soChoNgoi}">
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

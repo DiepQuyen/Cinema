@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::div})}">
+<body>
+<div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Quản Lý Phim</h2>
+        <a href="/admin/phim/them" class="btn btn-primary">Thêm Phim Mới</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên Phim</th>
+                <th>Thể Loại</th>
+                <th>Thời Lượng</th>
+                <th>Thao Tác</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="phim : ${phims}">
+                <td th:text="${phim.id}"></td>
+                <td th:text="${phim.tenPhim}"></td>
+                <td th:text="${phim.theLoai}"></td>
+                <td th:text="${phim.thoiLuong + ' phút'}"></td>
+                <td>
+                    <a th:href="@{/admin/phim/{id}/lich-chieu(id=${phim.id})}"
+                       class="btn btn-sm btn-info">Lịch Chiếu</a>
+                    <a th:href="@{/admin/phim/{id}/sua(id=${phim.id})}"
+                       class="btn btn-sm btn-warning">Sửa</a>
+                    <a th:href="@{/admin/phim/{id}/xoa(id=${phim.id})}"
+                       class="btn btn-sm btn-danger">Xóa</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

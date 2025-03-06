@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::div})}">
+<body>
+<div>
+    <h2 class="text-center mb-4">Danh Sách Phim</h2>
+    <div class="row">
+        <div class="col-md-4 mb-4" th:each="phim : ${phims}">
+            <div class="card h-100 shadow-sm" style="background-color: #FFF0F5;">
+                <img th:src="${phim.anhBia}" class="card-img-top" alt="Movie Poster">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${phim.tenPhim}"></h5>
+                    <p class="card-text" th:text="${phim.moTa}"></p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a th:href="@{/phim/{id}(id=${phim.id})}"
+                           class="btn btn-primary"
+                           style="background-color: #FFB6C1; border-color: #FFB6C1;">
+                            Chi tiết
+                        </a>
+                        <small th:text="${'Thời lượng: ' + phim.thoiLuong + ' phút'}"></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

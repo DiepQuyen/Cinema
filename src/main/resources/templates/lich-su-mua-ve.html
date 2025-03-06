@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::div})}">
+<body>
+<div>
+    <h2 class="text-center mb-4">Lịch Sử Mua Vé</h2>
+
+    <div th:if="${#lists.isEmpty(hoaDons)}" class="alert alert-info">
+        Bạn chưa có lịch sử mua vé nào.
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Phim</th>
+                        <th>Thời Gian</th>
+                        <th>Ảnh Phim</th>
+                        <th>Số Chỗ</th>
+                        <th>Số Tiền</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="hoaDon : ${hoaDons}">
+                        <td th:text="${hoaDon.datVe.lichChieu.phim.tenPhim}"></td>
+                        <td th:text="${#temporals.format(hoaDon.datVe.lichChieu.thoiGianChieu, 'HH:mm dd/MM/yyyy')}"></td>
+                        <td><img th:src="${hoaDon.datVe.lichChieu.phim.anhBia}" alt="Ảnh Phim" class="img-fluid"
+                                 style="max-width: 100px;"></td>
+                        <td th:text="${hoaDon.datVe.soLuongVe}"></td>
+                        <td th:text="${#numbers.formatDecimal(hoaDon.tongTien, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

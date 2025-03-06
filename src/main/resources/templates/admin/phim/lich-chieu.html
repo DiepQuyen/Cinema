@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::div})}">
+<body>
+<div>
+    <h2 class="text-center mb-4">Quản Lý Lịch Chiếu</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${phim.tenPhim}"></h5>
+                    <p class="card-text">
+                        <strong>Thời lượng:</strong>
+                        <span th:text="${phim.thoiLuong + ' phút'}"></span>
+                    </p>
+
+                    <form th:action="@{/admin/phim/{id}/lich-chieu(id=${phim.id})}"
+                          method="post"
+                          th:object="${lichChieu}">
+
+                        <div class="mb-3">
+                            <label for="rapChieu" class="form-label">Rạp chiếu</label>
+                            <select class="form-select" id="rapChieu" th:field="*{rapChieu}" required>
+                                <option value="">Chọn rạp chiếu</option>
+                                <option th:each="rap : ${rapChieus}"
+                                        th:value="${rap.id}"
+                                        th:text="${rap.tenRap}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="thoiGianChieu" class="form-label">Thời gian chiếu</label>
+                            <input type="datetime-local"
+                                   class="form-control"
+                                   id="thoiGianChieu"
+                                   th:field="*{thoiGianChieu}"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="giaVe" class="form-label">Giá vé</label>
+                            <input type="number"
+                                   class="form-control"
+                                   id="giaVe"
+                                   th:field="*{giaVe}"
+                                   min="0"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="soChoNgoi" class="form-label">Số chỗ ngồi</label>
+                            <input type="number"
+                                   class="form-control"
+                                   id="soChoNgoi"
+                                   th:field="*{soChoNgoi}"
+                                   min="1"
+                                   required>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Thêm Lịch Chiếu</button>
+                            <a th:href="@{/admin/phim}" class="btn btn-secondary">Quay Lại</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <h4>Danh sách lịch chiếu</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Rạp chiếu</th>
+                            <th>Thời gian</th>
+                            <th>Giá vé</th>
+                            <th>Số chỗ ngồi</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="lc : ${phim.lichChieus}">
+                            <td th:text="${lc.rapChieu.tenRap}"></td>
+                            <td th:text="${#temporals.format(lc.thoiGianChieu, 'HH:mm dd/MM/yyyy')}"></td>
+                            <td th:text="${#numbers.formatDecimal(lc.giaVe, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></td>
+                            <td th:text="${lc.soChoNgoi}"></td>
+                            <td th:text="${lc.trangThai}"></td>
+                            <td>
+                                <form th:action="@{/admin/phim/lich-chieu/{id}/xoa(id=${lc.id})}"
+                                      method="post"
+                                      style="display: inline">
+                                    <button type="submit"
+                                            class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Bạn có chắc muốn xóa lịch chiếu này?')">
+                                        Xóa
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

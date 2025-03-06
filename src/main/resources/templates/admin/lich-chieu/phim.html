@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::div})}">
+<body>
+<div>
+    <h2 class="text-center mb-4" th:text="'Lịch Chiếu: ' + ${phim.tenPhim}"></h2>
+
+    <div class="mb-3">
+        <a th:href="@{/admin/lich-chieu/them(phimId=${phim.id})}"
+           class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Thêm Lịch Chiếu
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Rạp</th>
+                <th>Thời gian chiếu</th>
+                <th>Giá vé</th>
+                <th>Số chỗ còn lại</th>
+                <th>Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="lichChieu : ${lichChieus}">
+                <td th:text="${lichChieu.rapChieu.tenRap}"></td>
+                <td th:text="${#temporals.format(lichChieu.thoiGianChieu,
+                        'HH:mm dd/MM/yyyy')}"></td>
+                <td th:text="${#numbers.formatDecimal(lichChieu.giaVe, 0,
+                        'COMMA', 0, 'POINT') + ' VNĐ'}"></td>
+                <td th:text="${lichChieu.soChoNgoi - lichChieu.soChoDaDat}">
+                </td>
+                <td>
+                    <a th:href="@{/admin/lich-chieu/{id}/sua(id=${lichChieu.id})}"
+                       class="btn btn-warning btn-sm">Sửa</a>
+                    <form th:action="@{/admin/lich-chieu/{id}/xoa(id=${lichChieu.id})}"
+                          method="post" style="display: inline">
+                        <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Bạn có chắc muốn xóa?')">
+                            Xóa
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

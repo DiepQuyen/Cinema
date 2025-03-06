@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::div})}">
+<body>
+<div>
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card"
+                 style="background-color: #FFF0F5; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4" style="color: #333;">Đăng Nhập</h2>
+
+                    <div th:if="${param.error}" class="alert alert-danger">
+                        Tên đăng nhập hoặc mật khẩu không đúng
+                    </div>
+
+                    <div th:if="${param.dangky}" class="alert alert-success">
+                        Đăng ký thành công! Vui lòng đăng nhập
+                    </div>
+
+                    <form th:action="@{/dang-nhap}" method="post">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Tên đăng nhập</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="username"
+                                   name="username"
+                                   required
+                                   style="border-radius: 8px;">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Mật khẩu</label>
+                            <input type="password"
+                                   class="form-control"
+                                   id="password"
+                                   name="password"
+                                   required
+                                   style="border-radius: 8px;">
+                        </div>
+
+                        <button type="submit"
+                                class="btn w-100 mb-3"
+                                style="background-color: #FFB6C1; color: white; border-radius: 8px; padding: 10px;">
+                            Đăng Nhập
+                        </button>
+
+                        <div class="text-center">
+                            <a href="/dang-ky"
+                               style="color: #FFB6C1; text-decoration: none;">
+                                Chưa có tài khoản? Đăng ký ngay
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

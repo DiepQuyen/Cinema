@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::div})}">
+<body>
+<div>
+    <h2 class="text-center mb-4">Đặt Vé Xem Phim</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card" style="background-color: #FFF0F5;">
+                <div class="card-body">
+                    <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+
+                    <form th:action="@{/dat-ve/mua-ve}" method="post" th:object="${datVeDTO}"
+                          onsubmit="return confirmBooking()">
+                        <input type="hidden" th:field="*{lichChieuId}"/>
+                        <input type="hidden" th:field="*{nguoiDungId}"/>
+
+                        <div class="mb-3">
+                            <label for="hoTen" class="form-label">Họ Tên</label>
+                            <input type="text" class="form-control" id="hoTen" th:field="*{hoTen}">
+                            <div class="text-danger" th:if="${#fields.hasErrors('hoTen')}" th:errors="*{hoTen}"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" th:field="*{email}">
+                            <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="soDienThoai" class="form-label">Số Điện Thoại</label>
+                            <input type="text" class="form-control" id="soDienThoai" th:field="*{soDienThoai}">
+                            <div class="text-danger" th:if="${#fields.hasErrors('soDienThoai')}"
+                                 th:errors="*{soDienThoai}"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="soLuongVe" class="form-label">Số Lượng Vé</label>
+                            <input type="number" class="form-control" id="soLuongVe" th:field="*{soLuongVe}" min="1"
+                                   max="10">
+                            <div class="text-danger" th:if="${#fields.hasErrors('soLuongVe')}"
+                                 th:errors="*{soLuongVe}"></div>
+                        </div>
+
+                        <button type="submit" class="btn w-100" style="background-color: #FFB6C1; color: white;">Tiếp
+                            Tục Thanh Toán
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmBooking() {
+        return confirm('Bạn có chắc chắn muốn đặt vé?');
+    }
+</script>
+</body>
+</html>

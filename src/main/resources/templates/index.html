@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::div})}">
+<body>
+<div>
+    <div class="jumbotron text-center" style="background-color: #FFF0F5;">
+        <h1>Hệ Thống Đặt Vé Xem Phim</h1>
+        <p>Chọn phim yêu thích và đặt vé ngay!</p>
+        <a href="/phim" class="btn btn-primary">Xem Danh Sách Phim</a>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-4 mb-4" th:each="phim : ${phimMoiNhat}">
+            <div class="card h-100">
+                <img th:src="${phim.anhBia}" class="card-img-top" alt="Movie Poster">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${phim.tenPhim}"></h5>
+                    <a th:href="@{/phim/{id}(id=${phim.id})}" class="btn btn-primary">Chi tiết</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

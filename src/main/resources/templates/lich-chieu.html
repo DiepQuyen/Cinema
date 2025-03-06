@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::div})}">
+<body>
+<div>
+    <h2 class="text-center mb-4">Lịch Chiếu Phim</h2>
+
+    <div th:if="${message}" class="alert alert-info text-center" th:text="${message}"></div>
+
+    <div th:if="${not #lists.isEmpty(lichChieus)}" class="row">
+        <div class="col-md-6 mb-4" th:each="lichChieu : ${lichChieus}">
+            <div class="card" style="background-color: #FFF0F5;">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${lichChieu.phim.tenPhim}"></h5>
+                    <p class="card-text">
+                        <strong>Thời gian:</strong>
+                        <span th:text="${#temporals.format(lichChieu.thoiGianChieu, 'HH:mm dd/MM/yyyy')}"></span>
+                    </p>
+                    <p class="card-text">
+                        <strong>Giá vé:</strong>
+                        <span th:text="${#numbers.formatDecimal(lichChieu.giaVe, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></span>
+                    </p>
+                    <p class="card-text">
+                        <strong>Số chỗ còn trống:</strong>
+                        <span th:text="${lichChieu.soChoNgoi - lichChieu.soChoDaDat}"></span>
+                    </p>
+                    <a th:href="@{/dat-ve/{id}(id=${lichChieu.id})}"
+                       class="btn btn-primary w-100">Đặt vé</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

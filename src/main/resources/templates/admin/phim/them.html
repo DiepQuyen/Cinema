@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::div})}">
+<body>
+<div>
+    <h2 class="text-center mb-4">Thêm Phim Mới</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form th:action="@{/admin/phim/them}" method="post" th:object="${phim}">
+                <div class="mb-3">
+                    <label for="tenPhim" class="form-label">Tên Phim</label>
+                    <input type="text" class="form-control" id="tenPhim" th:field="*{tenPhim}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="moTa" class="form-label">Mô Tả</label>
+                    <textarea class="form-control" id="moTa" th:field="*{moTa}" rows="3"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="theLoai" class="form-label">Thể Loại</label>
+                    <input type="text" class="form-control" id="theLoai" th:field="*{theLoai}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="thoiLuong" class="form-label">Thời Lượng (phút)</label>
+                    <input type="number" class="form-control" id="thoiLuong" th:field="*{thoiLuong}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="anhBia" class="form-label">URL Ảnh Bìa</label>
+                    <input type="url" class="form-control" id="anhBia" th:field="*{anhBia}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="ngayKhoiChieu" class="form-label">Ngày Khởi Chiếu</label>
+                    <input type="date" class="form-control" id="ngayKhoiChieu" th:field="*{ngayKhoiChieu}" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Thêm Phim</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

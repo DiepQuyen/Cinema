@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::div})}">
+<body>
+<div>
+    <h2 class="text-center mb-4">Quản Lý Phim</h2>
+
+    <div class="mb-3">
+        <a th:href="@{/admin/phim/them}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Thêm Phim Mới
+        </a>
+    </div>
+
+    <div th:if="${message}" class="alert alert-success" role="alert" th:text="${message}"></div>
+    <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Ảnh</th>
+                <th>Tên Phim</th>
+                <th>Thể Loại</th>
+                <th>Thời Lượng</th>
+                <th>Ngày Khởi Chiếu</th>
+                <th>Trạng Thái</th>
+                <th>Thao Tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="phim : ${phims}">
+                <td th:text="${phim.id}"></td>
+                <td>
+                    <img th:if="${phim.anhBia}" th:src="${phim.anhBia}"
+                         alt="Ảnh bìa" style="max-height: 50px;">
+                </td>
+                <td th:text="${phim.tenPhim}"></td>
+                <td th:text="${phim.theLoai}"></td>
+                <td th:text="${phim.thoiLuong + ' phút'}"></td>
+                <td th:text="${#temporals.format(phim.ngayKhoiChieu, 'dd/MM/yyyy')}"></td>
+                <td>
+                    <span th:class="${phim.isActive ? 'badge bg-success' : 'badge bg-danger'}"
+                          th:text="${phim.isActive ? 'Đang chiếu' : 'Ngừng chiếu'}">
+                    </span>
+                </td>
+                <td>
+                    <a th:href="@{/admin/lich-chieu/phim/{id}(id=${phim.id})}"
+                       class="btn btn-info btn-sm">
+                        Xem Lịch Chiếu
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{/admin/phim/{id}/sua(id=${phim.id})}"
+                       class="btn btn-warning btn-sm">Sửa</a>
+                    <form th:action="@{/admin/phim/{id}/xoa(id=${phim.id})}"
+                          method="post" style="display: inline">
+                        <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Bạn có chắc muốn xóa phim này?')">
+                            Xóa
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

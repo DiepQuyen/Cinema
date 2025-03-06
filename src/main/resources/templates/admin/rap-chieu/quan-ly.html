@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::div})}">
+<body>
+<div>
+    <h2 class="text-center mb-4">Quản Lý Rạp Chiếu</h2>
+    <div class="text-end mb-3">
+        <a th:href="@{/admin/rap-chieu/them}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Thêm Rạp Chiếu
+        </a>
+    </div>
+
+    <div th:if="${success}" class="alert alert-success" role="alert" th:text="${success}"></div>
+    <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên Rạp</th>
+                <th>Địa Chỉ</th>
+                <th>Thao Tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="rap : ${rapChieus}">
+                <td th:text="${rap.id}"></td>
+                <td th:text="${rap.tenRap}"></td>
+                <td th:text="${rap.diaChi}"></td>
+                <td>
+                    <a th:href="@{/admin/rap-chieu/{id}/sua(id=${rap.id})}"
+                       class="btn btn-sm btn-warning">
+                        Sửa
+                    </a>
+                    <form th:action="@{/admin/rap-chieu/{id}/xoa(id=${rap.id})}"
+                          method="post" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-danger"
+                                onclick="return confirm('Bạn có chắc muốn xóa?')">
+                            Xóa
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

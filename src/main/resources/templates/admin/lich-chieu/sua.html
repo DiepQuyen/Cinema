@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::div})}">
+<body>
+<div>
+    <h2 class="text-center mb-4">Sửa Lịch Chiếu</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form th:action="@{/admin/lich-chieu/{id}/sua(id=${lichChieu.id})}"
+                  method="post" th:object="${lichChieu}">
+                <input type="hidden" th:field="*{id}">
+                <!-- Same form fields as them.html -->
+                <div class="mb-3">
+                    <label for="phim" class="form-label">Phim</label>
+                    <select class="form-control" id="phim" th:field="*{phim}" required>
+                        <option value="">Chọn phim</option>
+                        <option th:each="phim : ${phims}"
+                                th:value="${phim.id}"
+                                th:text="${phim.tenPhim}"></option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="rapChieu" class="form-label">Rạp chiếu</label>
+                    <select class="form-control" id="rapChieu" th:field="*{rapChieu}" required>
+                        <option value="">Chọn rạp chiếu</option>
+                        <option th:each="rap : ${rapChieus}"
+                                th:value="${rap.id}"
+                                th:text="${rap.tenRap}"></option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="thoiGianChieu" class="form-label">Thời gian chiếu</label>
+                    <input type="datetime-local" class="form-control"
+                           id="thoiGianChieu" th:field="*{thoiGianChieu}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="giaVe" class="form-label">Giá vé</label>
+                    <input type="number" class="form-control"
+                           id="giaVe" th:field="*{giaVe}" min="0" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="soChoNgoi" class="form-label">Số chỗ ngồi</label>
+                    <input type="number" class="form-control"
+                           id="soChoNgoi" th:field="*{soChoNgoi}" min="1" required>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
+                    <a th:href="@{/admin/lich-chieu}" class="btn btn-secondary">Hủy</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

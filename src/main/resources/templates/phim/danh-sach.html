@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::div})}">
+<body>
+<div>
+    <div class="mb-4">
+        <h2 class="text-center">Danh Sách Phim</h2>
+        <div class="d-flex justify-content-end mb-3">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-outline-primary active" id="gridView">
+                    <i class="bi bi-grid"></i> Lưới
+                </button>
+                <button type="button" class="btn btn-outline-primary" id="listView">
+                    <i class="bi bi-list"></i> Danh sách
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="gridContainer" class="row">
+        <div class="col-md-4 col-lg-3 mb-4" th:each="phim : ${phims}">
+            <div class="card h-100 shadow-sm hover-card">
+                <div class="position-relative">
+                    <img th:src="${phim.anhBia}" class="card-img-top" alt="Movie Poster">
+                    <div class="overlay">
+                        <a th:href="@{/phim/{id}(id=${phim.id})}" class="btn btn-light">Chi tiết</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${phim.tenPhim}"></h5>
+                    <p class="card-text text-muted">
+                        <small>
+                            <i class="bi bi-tag"></i> <span th:text="${phim.theLoai}"></span>
+                            <br>
+                            <i class="bi bi-clock"></i> <span th:text="${phim.thoiLuong + ' phút'}"></span>
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="listContainer" class="d-none">
+        <div class="list-group">
+            <a th:each="phim : ${phims}"
+               th:href="@{/phim/{id}(id=${phim.id})}"
+               class="list-group-item list-group-item-action">
+                <div class="row align-items-center">
+                    <div class="col-md-2">
+                        <img th:src="${phim.anhBia}" class="img-fluid rounded" alt="Movie Poster">
+                    </div>
+                    <div class="col-md-10">
+                        <h5 class="mb-1" th:text="${phim.tenPhim}"></h5>
+                        <p class="mb-1" th:text="${phim.moTa}"></p>
+                        <small class="text-muted">
+                            <span th:text="${phim.theLoai}"></span> |
+                            <span th:text="${phim.thoiLuong + ' phút'}"></span>
+                        </small>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <style>
+        .hover-card {
+            transition: transform 0.2s;
+        }
+
+        .hover-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .hover-card:hover .overlay {
+            opacity: 1;
+        }
+    </style>
+
+    <script>
+        document.getElementById('gridView').addEventListener('click', function () {
+            document.getElementById('gridContainer').classList.remove('d-none');
+            document.getElementById('listContainer').classList.add('d-none');
+            this.classList.add('active');
+            document.getElementById('listView').classList.remove('active');
+        });
+
+        document.getElementById('listView').addEventListener('click', function () {
+            document.getElementById('listContainer').classList.remove('d-none');
+            document.getElementById('gridContainer').classList.add('d-none');
+            this.classList.add('active');
+            document.getElementById('gridView').classList.remove('active');
+        });
+    </script>
+</div>
+</body>
+</html>
